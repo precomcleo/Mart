@@ -1,0 +1,87 @@
+{# vendor/templates/product/product_list.html #}
+{% extends 'product/base.html' %}
+
+{% block content %}
+<form method="post" action="{% url 'PRODUCT:order_create' %}" name="cform" id="cform">
+    {% csrf_token %}
+    <div class="row">
+        <div class="col-sm-4">
+            <select class="form-select" aria-label="Default select example" name="product_id" form="cform">
+                <option selected>Select Product</option>
+                {% for product in product_list  %}
+                    <option value="{{product.product_id}}">{{ product.product_id }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="col-sm-4">
+            <input name="qty" id="qty" placeholder="數量" >
+            <input type="submit" id="submit" name="send" class="submitBnt" value="+">
+        </div>
+        <div class="col-sm-4">
+            <div class="row">
+                <div class="col-8 col-sm-6">
+                    <input name="customer_id" id="customer_id" placeholder="Customer Id">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-8 col-sm-6">
+                    <input name="is_vip" id="is_vip" type="checkbox" value=1> 是否為vip身份
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<div>
+    <p>商品列表</p>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                {% for product_field in product_field_name  %}
+                    <th>{{ product_field }}</th>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for product in product_list  %}
+            <tr>
+                <td>{{ product.product_id }}</td>
+                <td>{{ product.stock_pcs }}</td>
+                <td>{{ product.price }}</td>
+                <td>{{ product.shop_id }}</td>
+                <td><input type="checkbox" name="vip" {% if product.vip == True %}checked="checked"{% endif %}/></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<div>
+    <p>訂單記錄</p>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                {% for order_field in order_field_name  %}
+                    <th>{{ order_field }}</th>
+                {% endfor %}
+                <th>delect</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for order in order_list  %}
+            <tr>
+                <td>{{ order.id }}</td>
+                <td>{{ order.product_id }}</td>
+                <td>{{ order.qty }}</td>
+                <td>{{ order.price }}</td>
+                <td>{{ order.shop_id }}</td>
+                <td><a href="{% url 'PRODUCT:order_delete' order.pk %}">刪除</a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<input type="button" value="Top 3" onclick="location.href='{% url "PRODUCT:top_three" %}'">
+
+{% endblock content %}

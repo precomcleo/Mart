@@ -1,0 +1,20 @@
+{# base/templates/index.html #}
+
+<!DOCTYPE html>
+<html>
+    <head>
+        {% block head %}{% endblock head %} 
+    </head>
+
+    <body>
+        {% block body %}{% endblock body %}
+    </body>
+</html>
+
+{% if messages %}
+    <script>
+        {% for msg in messages %}
+            alert('{{ msg.message }}');
+        {% endfor %}
+    </script>
+{% endif %}

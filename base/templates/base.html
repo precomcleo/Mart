@@ -1,0 +1,29 @@
+{# base/templates/base.html #}
+
+{% extends 'index.html' %}
+{% load static %}
+
+{% block head %}  
+<title>{% block title %}Urmart{% endblock title %}</title>
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+{% endblock head %}
+
+{% block body %}
+<header>
+  {% block header %}
+  <nav id="nav" class="navbar navbar-default navbar-static-top" role="navigation">
+    {% block nav %}
+    <div class="container-navbar">
+      <!-- logo -->
+      <div class="navbar-header">
+        <a class="navbar-brand" href="">Urmart</a>
+      </div>
+    </div>
+    {% endblock nav %}
+  </nav>
+  {% endblock header %}
+</header>
+
+{% block home %}{% endblock home %}
+
+{% endblock body %} 
